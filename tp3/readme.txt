@@ -2,7 +2,7 @@ Bagpipe Hero v1.0.0
 A 15-112 Term Project by Tate Mauzy
 
 IMPORTANT: To run code, download "Music" folder from 
-https://drive.google.com/drive/u/1/folders/1acFnv0fNpa7kx_wVo3KRlUI1X3QQi3JK,
+https://drive.google.com/drive/folders/1acFnv0fNpa7kx_wVo3KRlUI1X3QQi3JK?usp=sharing,
 and place in "Code and Revelant Files" directory.
 
 Project Description: Bagpipe Hero is a game similar to Guitar Hero 
