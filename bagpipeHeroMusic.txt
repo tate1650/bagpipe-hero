@@ -1,0 +1,7 @@
+Link to Music Files Used in the Bagpipe Hero TP
+
+https://drive.google.com/drive/folders/1acFnv0fNpa7kx_wVo3KRlUI1X3QQi3JK?usp=sharing
+
+(Please note that you will need to be signed into your CMU Andrew account in order to access this folder)
+
+To run the code such that it works properly with the music, download the whole “Music” folder from the Google Drive link and put it exactly as it is directly into the “Code and Relevant Files” directory in the tp3 folder. Thank you!
