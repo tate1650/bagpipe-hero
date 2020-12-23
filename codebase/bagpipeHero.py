@@ -727,7 +727,7 @@ class PygameGame(object): ###
     def drawKeyboardDiagram(self, screen):
         size = ((self.width * 3) // 8, (self.height * 3) // 16)
         diagramCoords = (self.width * (60/100), self.height * (57/100))
-        keyboardDiagram = pygame.image.load('Images/keyboardDiagram.png')
+        keyboardDiagram = pygame.image.load('Images/keyboardDiagram.jpg')
         keyboardDiagram = pygame.transform.scale(keyboardDiagram, size)
         screen.blit(keyboardDiagram, diagramCoords)
 

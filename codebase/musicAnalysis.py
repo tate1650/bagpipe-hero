@@ -83,7 +83,6 @@ class Song(object):
             # where notes are MIDI values
             startNote, endNote = noteFrame[0], noteFrame[2]
             if startNote != 0:
-                print(noteFrame)
                 # A lot of the note frames are just silence, so check to
                 # make sure it isn't 0 before doing anything
                 if startNote not in noteCountDict:
