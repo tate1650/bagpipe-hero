@@ -100,9 +100,12 @@ class PygameGame(object): ###
         self.helpBoxCoords= (0, 0)
         self.helpBoxWidth, self.helpBoxHeight = (0, 0)
         self.isPaused = False
+        self.analyzedSong = None
 
     # creates all the NoteSprite objects to be drawn on the screen
+    # and also returns the total pixel length of the sprites created
     def createNoteSprites(self, songObject):
+        totalSpriteLen = 0
         rBagpipeNoteDict = songObject.reverseBagpipeScaleDict
         distanceDownScreen = self.screenLength
         lengthPerFragment = self.totalScreenLen / songObject.totalBeats
@@ -120,6 +123,8 @@ class PygameGame(object): ###
             self.noteSprites.add(newNoteSprite)
             distanceDownScreen += noteSpriteLen 
             # moves x coord to make way for next noteSprite
+            totalSpriteLen += noteSpriteLen
+        return totalSpriteLen
 
     # Initializes the gameMode where core gameplay takes place
     def initGameMode(self, screen):
@@ -133,14 +138,15 @@ class PygameGame(object): ###
         screen.blit(loadText, (self.width // 10, self.height // 2))
         pygame.display.flip()
         songPath = f'Music/PlayableSongs/{self.songSelection}'
-        analyzedSong = music.PlayableSong(songPath)
+        self.analyzedSong = music.PlayableSong(songPath)
         # set the total screen length for the song (used to determine
         # how long each note rectangle will be)
         self.screenLength = self.width * (3/4)
-        self.totalScreenLen = (self.screenLength * analyzedSong.duration)
+        self.totalScreenLen = (self.screenLength * self.analyzedSong.duration)
         # Decrease the screen length for hard-code adjustment of note size
         self.totalScreenLen //= 31.5
-        self.createNoteSprites(analyzedSong)
+        self.totalSpriteLen = self.createNoteSprites(self.analyzedSong)
+        print(self.totalScreenLen, self.totalSpriteLen)
         self.backgroundSong = pygame.mixer.Sound(songPath)
         self.backgroundSong.play(loops = 0)
 
@@ -251,7 +257,21 @@ class PygameGame(object): ###
                 self.checkCollidedNotes()
 
                 for group in self.spriteGroups:
-                    group.update()
+                    if (group.sprites() != [] and 
+                        isinstance(group.sprites()[0], NoteSprite)):
+                        # for some reason, all songs stop about 97% through their full time
+                        # so this scaling factor fixes that
+                        speedScalingFactor = 1.03
+                        # Overall, sprites should move the full sprite-covered distance
+                        # plus an extra screen length (to account for the song start),
+                        # plus an extra 100 pixels or so (so the mode doesn't end right
+                        # as you hit your last note)
+                        extraEndDistance = 100 + self.screenLength
+                        totalDistanceToTravel = self.totalSpriteLen + extraEndDistance
+                        increment = totalDistanceToTravel / self.analyzedSong.duration / self.fps
+                        increment *= speedScalingFactor
+                        group.update(increment)
+                    else: group.update()
                 
                 self.adjustScore()
                 self.incrementMeter()

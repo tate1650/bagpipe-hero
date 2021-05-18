@@ -55,8 +55,8 @@ class NoteSprite(pygame.sprite.Sprite):
         pygame.draw.rect(self.image, self.color, ((self.x, self.y), self.size))
 
     # Updates the note sprite
-    def update(self):
-        self.x -= 2.2
+    def update(self, increment):
+        self.x -= increment
         self.rect = pygame.Rect((self.x, self.y), self.size)
         self.image.fill(self.color)
 
